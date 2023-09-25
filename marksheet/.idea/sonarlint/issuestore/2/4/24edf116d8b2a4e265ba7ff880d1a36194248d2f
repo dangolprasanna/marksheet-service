@@ -1,0 +1,8 @@
+
+]	java:S125'"<This block of commented-out lines of code should be removed.(ÙÑïşÿÿÿÿ8µ¹¬1
+®
+java:S11307"‹Remove the declaration of thrown exception 'com.fasterxml.jackson.core.JsonProcessingException', as it cannot be thrown from method's body.(¼øÊ÷ÿÿÿÿÿ8Ÿµ¹¬1
+d
+java:S1854H"BRemove this useless assignment to local variable "responseEntity".(¥÷Äşÿÿÿÿ8¦ßÌ¬1
+U
+java:S1481H"3Remove this unused "responseEntity" local variable.(¥÷Äşÿÿÿÿ8­ßÌ¬1

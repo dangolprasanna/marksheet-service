@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
+@ToString(exclude = "student")
 @Table(name = "parent")
 public class Parent {
     @Id

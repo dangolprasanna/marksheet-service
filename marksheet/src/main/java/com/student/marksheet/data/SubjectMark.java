@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
+@ToString(exclude = "student")
 @Table(name = "subjectmark")
 
 public class SubjectMark {

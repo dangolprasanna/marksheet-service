@@ -6,12 +6,10 @@ import com.student.marksheet.data.Student;
 import com.student.marksheet.repository.StudentRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -20,10 +18,10 @@ import java.util.List;
 public class StudentService {
     @Autowired
     public StudentRepo studentRepo;
-
+    @Autowired
+    RestTemplate restTemplate;
     @Autowired
     private ParentService parentService;
-
     @Autowired
     private SubjectMarkService subjectMarksService;
 
@@ -54,27 +52,20 @@ public class StudentService {
 
     public void getAStudent() throws JsonProcessingException {
         List<Student> students = studentRepo.findAll();
-        for (int i = 0; i < students.size(); i++) {
-            Student s1 = students.get(i);
-            String emailJson = s1.toString();
-            sendEmailToParents(emailJson);
+        for (Student s1 : students) {
+            sendEmailToParents(s1);
         }
     }
 
-    public void sendEmailToParents(String emailJson) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        //HttpEntity<String> requestEntity = new HttpEntity<>(emailJson, headers);
-
+    public void sendEmailToParents(Student student) {
         try {
-            ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:8080/sendMarksheetMail", emailJson, String.class);
+            String ROOT_URI = "http://localhost:8443/sendBulkEmail";
+            ResponseEntity<Student> responseEntity = restTemplate.postForEntity(ROOT_URI, student, Student.class);
 
-        } catch (HttpClientErrorException e) {
-            // Handle the exception
-            e.printStackTrace();
+        } catch (RestClientException e) {
+            // Handle exceptions (e.g., ResourceAccessException) here.
+            e.printStackTrace(); // Consider logging the exception.
         }
-        ResponseEntity.ok("Sent");
     }
+
 }

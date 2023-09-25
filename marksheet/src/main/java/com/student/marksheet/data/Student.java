@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
+//@ToString(exclude = "parent", "subjectMarks")
 @Table(name = "student")
 
 public class Student
@@ -29,4 +29,13 @@ public class Student
     @JsonManagedReference
     private List<SubjectMark> subjectMarks = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parent=" + parent +
+                ", subjectMarks=" + subjectMarks +
+                '}';
+    }
 }
